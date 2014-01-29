@@ -19,7 +19,7 @@ class bn
 {
 	Boolean bracematcher(String x){
 		Stack<Character> a= new Stack<Character>();
-		String brackets="({[)}]";
+		String brackets="({[<)}]>";
 		int pos=0;
 		for(char c :x.toCharArray()){
 			pos=brackets.indexOf(c);
