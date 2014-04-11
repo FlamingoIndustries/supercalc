@@ -39,10 +39,10 @@ class CosineFunctionElement extends FunctionElement
 			System.out.println("Cosine already has one argument");
 	}
 	
-	public double getValue()
+	public double evaluate() throws Exception
 	{
 		Vector<FormulaElement> temp=this.getArguments();
-		return Math.cos(temp.firstElement().getValue());
+		return Math.cos(temp.firstElement().evaluate());
 	}
 	
 	/**

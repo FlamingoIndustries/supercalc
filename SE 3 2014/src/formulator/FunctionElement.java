@@ -28,4 +28,28 @@ abstract class FunctionElement extends FormulaElement
 		return arguments;								 
 	}
 	
+	/**
+	 * Iterates through the arguments of the function element and passes the 
+	 * assignment of the variable value to these arguments.
+	 * @param varName The name of the variable to assign
+	 * @param value value to assign to the variable
+	 */
+	public void setVariableValue(String varName, double value)
+	{
+		for(FormulaElement f:arguments)
+			f.setVariableValue(varName, value);
+	}
+	
+	/**
+	 * @return a boolean value if the variables in the arguments are assigned
+	 */
+	public Boolean isFullyGrounded()
+	{
+		for(FormulaElement f:arguments)
+			if(f instanceof VariableElement || f instanceof FunctionElement)
+				if(!f.isFullyGrounded())
+					return false;
+		return true;
+	}
+	
 }

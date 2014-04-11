@@ -41,10 +41,10 @@ class MinusFunctionElement extends FunctionElement
 			System.out.println("Unable to add argument, argument limit reached");
 	}
 	
-	public double getValue()
+	public double evaluate() throws Exception
 	{
 		Vector<FormulaElement> temp=this.getArguments();
-		return ((FormulaElement)temp.elementAt(0)).getValue()-((FormulaElement)temp.elementAt(1)).getValue();
+		return ((FormulaElement)temp.elementAt(0)).evaluate()-((FormulaElement)temp.elementAt(1)).evaluate();
 	}
 	
 	/**
@@ -56,7 +56,7 @@ class MinusFunctionElement extends FunctionElement
 		String output="";
 		Vector<FormulaElement> temp=this.getArguments();
 		if(temp.elementAt(0) instanceof ConstantElement&&temp.elementAt(1) instanceof ConstantElement)					//If both arguments are constants, the arithmetic result is returned
-			output+=(((ConstantElement)temp.elementAt(0)).getValue()-((ConstantElement)temp.elementAt(1)).getValue());
+			output+=(((ConstantElement)temp.elementAt(0)).evaluate()-((ConstantElement)temp.elementAt(1)).evaluate());
 		else if(temp.elementAt(0).equals(temp.elementAt(1)))		//If both arguments are the same, the output is 0
 			output="0";
 		else

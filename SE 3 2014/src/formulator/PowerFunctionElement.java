@@ -37,10 +37,10 @@ class PowerFunctionElement extends FunctionElement
 			System.out.println("Unable to add argument, argument limit reached");
 	}
 	
-	public double getValue()
+	public double evaluate() throws Exception
 	{
 		Vector<FormulaElement> temp=this.getArguments();
-		return Math.pow(temp.firstElement().getValue(), temp.elementAt(1).getValue());
+		return Math.pow(temp.firstElement().evaluate(), temp.elementAt(1).evaluate());
 	}
 	
 	/**

@@ -8,6 +8,7 @@ class VariableElement extends FormulaElement
 {
 	private String name;						
 	private double value;
+	private Boolean assigned;
 	
 	/**
 	 * 
@@ -15,7 +16,8 @@ class VariableElement extends FormulaElement
 	 */
 	public VariableElement(String nme)
 	{
-		name=nme;								
+		name=nme;	
+		assigned=false;
 	}
 	
 	/**
@@ -30,10 +32,23 @@ class VariableElement extends FormulaElement
 	/**
 	 * 
 	 * @return The double value of the variable
+	 * @throws Exception 
 	 */
-	public double getValue()
+	public double getValue() throws Exception
 	{
+		if(!assigned)
+			throw new Exception("Variable "+getName()+" unassigned!");
 		return value;
+	}	
+	
+	/**
+	 * 
+	 * @return The double value of the variable
+	 * @throws Exception 
+	 */
+	public double evaluate() throws Exception
+	{
+		return getValue();
 	}									
 	
 	/**
@@ -43,6 +58,26 @@ class VariableElement extends FormulaElement
 	public void setValue(double val)
 	{
 		value=val;
+		assigned=true;
+	}
+	
+	/**
+	 * 
+	 * @param varName The name of the variable to assign
+	 * @param value value to assign to the variable
+	 */
+	public void setVariableValue(String varName, double value)
+	{
+		if(name.equals(varName))
+			setValue(value);
+	}
+	
+	/**
+	 * @return a boolean value if the variable has been assigned
+	 */
+	public Boolean isFullyGrounded()
+	{
+		return assigned;
 	}
 	
 	/**
@@ -51,5 +86,10 @@ class VariableElement extends FormulaElement
 	public String toString()
 	{
 		return name;
+	}
+	
+	public FormulaElement getSimplifiedCopy() throws CloneNotSupportedException
+	{
+		return (VariableElement)this.clone();
 	}
 }

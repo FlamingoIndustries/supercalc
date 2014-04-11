@@ -44,13 +44,13 @@ class PlusFunctionElement extends FunctionElement
 			super.addNewArgument(x);
 	}
 	
-	public double getValue()
+	public double evaluate() throws Exception
 	{
 		Vector<FormulaElement> temp=this.getArguments();
 		double total=0;
 		for(FormulaElement x: temp)
 		{
-			total+=x.getValue();
+			total+=x.evaluate();
 		}
 		return total;
 	}
@@ -73,7 +73,7 @@ class PlusFunctionElement extends FunctionElement
 		for(int i=0;i<temp.size();i++)
 		{
 			if(temp.elementAt(i) instanceof ConstantElement)	//Totaling constant elements
-				constant_total+=((ConstantElement)temp.elementAt(i)).getValue();
+				constant_total+=((ConstantElement)temp.elementAt(i)).evaluate();
 			else if(temp.elementAt(i) instanceof VariableElement)
 			{
 				Boolean exists=false;
@@ -124,5 +124,47 @@ class PlusFunctionElement extends FunctionElement
 					output+=((int)constant_total);
 		}
 		return output;
+	}
+	
+	public FormulaElement getSimplifiedCopy() throws CloneNotSupportedException
+	{
+		PlusFunctionElement out=(PlusFunctionElement) this.clone();
+		double consttotal=0;
+		Vector<FormulaElement> pluselem=out.getArguments();
+		HashMap<String, Integer> vars=new HashMap<String, Integer>();
+		for(int x=0;x<pluselem.size();x++)
+		{
+			if(pluselem.elementAt(x) instanceof ConstantElement)
+			{
+				consttotal+=((ConstantElement) pluselem.remove(x)).getValue();
+				x--;
+			}
+			
+			if(pluselem.elementAt(x) instanceof VariableElement)
+			{
+				int num;
+				String name=((VariableElement)pluselem.elementAt(x)).getName();
+				if(!vars.containsKey(name))
+					num=1;
+				else
+					num=vars.get(name);
+				vars.put(name, num);
+				x--;
+			}
+			
+			if(pluselem.elementAt(x) instanceof MinusFunctionElement)
+			{
+				Vector<FormulaElement> minelem=((MinusFunctionElement)pluselem.remove(x)).getArguments();
+				out.addNewArgument(minelem.elementAt(0));
+				MultipleFunctionElement mult=new MultipleFunctionElement(new ConstantElement(-1),minelem.lastElement());
+				out.addNewArgument(mult);
+				x--;
+			}
+			
+			if(pluselem.elementAt(x) instanceof MultipleFunctionElement)
+			{
+				
+			}
+		}
 	}
 }

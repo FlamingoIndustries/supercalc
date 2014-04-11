@@ -45,13 +45,13 @@ class MultipleFunctionElement extends FunctionElement
 			super.addNewArgument(x);
 	}
 	
-	public double getValue()
+	public double evaluate() throws Exception
 	{
 		Vector<FormulaElement> temp=this.getArguments();
 		double total=1;
 		for(FormulaElement x: temp)
 		{
-			total*=x.getValue();
+			total*=x.evaluate();
 		}
 		return total;
 	}
@@ -73,7 +73,7 @@ class MultipleFunctionElement extends FunctionElement
 		for(int i=0;i<temp.size();i++)
 		{			
 			if(temp.elementAt(i) instanceof ConstantElement)			//Totaling constant elements
-				constant_total*=((ConstantElement)temp.elementAt(i)).getValue();
+				constant_total*=((ConstantElement)temp.elementAt(i)).evaluate();
 			else if(temp.elementAt(i) instanceof VariableElement)
 			{
 				Boolean exists=false;

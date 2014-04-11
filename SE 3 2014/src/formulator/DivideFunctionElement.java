@@ -42,10 +42,10 @@ class DivideFunctionElement extends FunctionElement
 			System.out.println("Unable to add argument, argument limit reached");
 	}
 	
-	public double getValue()
+	public double evaluate() throws Exception
 	{
 		Vector<FormulaElement> temp=this.getArguments();
-		return ((FormulaElement)temp.elementAt(0)).getValue()/((FormulaElement)temp.elementAt(1)).getValue();
+		return ((FormulaElement)temp.elementAt(0)).evaluate()/((FormulaElement)temp.elementAt(1)).evaluate();
 	}
 	
 	/**

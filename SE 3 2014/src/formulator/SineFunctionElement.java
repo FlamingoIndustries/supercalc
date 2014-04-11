@@ -39,10 +39,10 @@ class SineFunctionElement extends FunctionElement
 			System.out.println("Sine already has one argument");
 	}
 	
-	public double getValue()
+	public double evaluate() throws Exception
 	{
 		Vector<FormulaElement> temp=this.getArguments();
-		return Math.sin(temp.firstElement().getValue());
+		return Math.sin(temp.firstElement().evaluate());
 	}
 	
 	/**
