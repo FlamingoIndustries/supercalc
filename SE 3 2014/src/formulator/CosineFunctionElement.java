@@ -31,6 +31,7 @@ class CosineFunctionElement extends FunctionElement
 	 * to be added to the function. 
 	 * @param x is the argument to add to the function
 	 */
+	@Override
 	public void addNewArgument(FormulaElement x)
 	{
 		if(this.getArguments().isEmpty())
@@ -39,6 +40,7 @@ class CosineFunctionElement extends FunctionElement
 			System.out.println("Cosine already has one argument");
 	}
 	
+	@Override
 	public double evaluate() throws Exception
 	{
 		Vector<FormulaElement> temp=this.getArguments();
@@ -48,8 +50,17 @@ class CosineFunctionElement extends FunctionElement
 	/**
 	 * @return The string form of the argument inside the cosine function, in the form cos(argument)
 	 */
+	@Override
 	public String toString()
 	{
 		return "cos("+this.getArguments().firstElement().toString()+")";
+	}
+	
+	@Override
+	public FormulaElement getSimplifiedCopy()
+	{
+		Vector<FormulaElement> v=this.getArguments();
+		FormulaElement out=new CosineFunctionElement(v.firstElement().getSimplifiedCopy());
+		return out;
 	}
 }
