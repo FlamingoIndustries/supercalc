@@ -28,4 +28,10 @@ public class SineFunctionElement extends FunctionElement {
 		return Math.sin(getArguments().elementAt(0).evaluate());
 	}
 
+	@Override
+	public FormulaElement getSimplifiedCopy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
