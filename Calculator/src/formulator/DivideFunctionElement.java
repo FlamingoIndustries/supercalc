@@ -53,4 +53,10 @@ public class DivideFunctionElement extends FunctionElement{
 		FormulaElement arg2 = getArguments().elementAt(1);
 		return arg1.evaluate()/arg2.evaluate();
 	}
+
+	@Override
+	public FormulaElement getSimplifiedCopy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

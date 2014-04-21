@@ -31,5 +31,10 @@ public class VariableElement extends FormulaElement {
 	public double evaluate() {
 		return value;
 	}
+
+	@Override
+	public FormulaElement getSimplifiedCopy() {
+		return this;
+	}
 	
 }
