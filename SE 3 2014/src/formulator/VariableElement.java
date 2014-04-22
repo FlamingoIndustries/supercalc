@@ -4,9 +4,6 @@
 
 package formulator;
 
-import java.util.Arrays;
-import java.util.Vector;
-
 class VariableElement extends FormulaElement
 {
 	private String name;						
@@ -49,7 +46,6 @@ class VariableElement extends FormulaElement
 	 * @return The double value of the variable
 	 * @throws Exception 
 	 */
-	@Override
 	public double evaluate() throws Exception
 	{
 		return getValue();
@@ -70,7 +66,6 @@ class VariableElement extends FormulaElement
 	 * @param varName The name of the variable to assign
 	 * @param value value to assign to the variable
 	 */
-	@Override
 	public void setVariableValue(String varName, double value)
 	{
 		if(name.equals(varName))
@@ -80,7 +75,6 @@ class VariableElement extends FormulaElement
 	/**
 	 * @return a boolean value if the variable has been assigned
 	 */
-	@Override
 	public Boolean isFullyGrounded()
 	{
 		return assigned;
@@ -89,38 +83,13 @@ class VariableElement extends FormulaElement
 	/**
 	 * @return the name of the variable in string form
 	 */
-	@Override
 	public String toString()
 	{
 		return name;
 	}
 	
-	@Override
-	public FormulaElement getSimplifiedCopy()
+	public FormulaElement getSimplifiedCopy() throws CloneNotSupportedException
 	{
-		return this;
+		return (VariableElement)this.clone();
 	}
-
-	@Override
-	public void replaceVariable(String varName, FormulaElement replace)
-	{
-		
-	}
-
-	@Override
-	public String getXMLformat(String tabbing)
-	{
-		return "<"+this.getClass().getSimpleName()+">name="+name+" value="+value+" assigned="
-	+assigned+"</"+this.getClass().getSimpleName()+">";
-	}
-	
-	public Boolean equals(FormulaElement comp)
-	{
-		if(comp instanceof VariableElement&& name.equals(comp.toString()))
-			return true;
-		else
-			return false;
-		
-	}
-	
 }

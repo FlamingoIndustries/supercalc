@@ -27,11 +27,5 @@ public class CosineFunctionElement extends FunctionElement{
 	public double evaluate(){
 		return Math.cos(getArguments().elementAt(0).evaluate());
 	}
-
-	@Override
-	public FormulaElement getSimplifiedCopy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }
