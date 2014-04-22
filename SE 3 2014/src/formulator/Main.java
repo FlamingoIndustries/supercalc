@@ -19,7 +19,8 @@ public class Main
 		//result=diff.numericDiff(result,"x",1);
 		System.out.println(result);
 	//	System.out.println(result2);
-	//	ReadWriteFormulae.WriteFormulae();
+		ReadWriteFormulae.ReadFormulae();
+		//ReadWriteFormulae.WriteFormulae();
 		System.out.println(result.getSimplifiedCopy()+"\n\n\n");
 		result=FormulaElement.parseFormula("(x+2)+(x-3)(x+4)/(x+4)");
 		System.out.println(result);
