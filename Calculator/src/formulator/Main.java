@@ -45,7 +45,7 @@ public class Main {
 		formulas.put("g", G);
 		String input = "f(x=g(2), y=2)";
 		EvalFormula eval = new EvalFormula(input.substring(0, 1));
-		System.out.println("Evaluation: "+eval.evaluateFor(input));
+		System.out.println("Evaluation: "+eval.evaluateInput(input));
 		
 	}
 
