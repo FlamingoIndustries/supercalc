@@ -1,15 +1,15 @@
 package formulator;
 
 public class Point {
-	int x, y;
-	public Point(int x1, int y1){
-	x = x1;
+	double x, y;
+	public Point(double x2, double y1){
+	x = x2;
 	y = y1;
 	}
-	public int getx(){
+	public double getx(){
 		return x;
 	}
-	public int gety(){
+	public double gety(){
 		return y;
 	}
 }
