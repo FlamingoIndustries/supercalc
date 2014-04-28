@@ -1,6 +1,5 @@
 package formulator;
 
-import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,11 +10,11 @@ public class Branch
 	{
 		if(text.equals("save"))
 		{
-			
+			ReadWriteFormulae.WriteFormulae();
 		}
 		else if(text.equals("load"))
 		{
-			
+			ReadWriteFormulae.ReadFormulae();
 		}
 		else if(text.matches("^graph\\s+\\w+\\(\\w+(,\\w+)*\\)"))
 		{
@@ -39,13 +38,17 @@ public class Branch
 			formv.add(m.group(3));
 			//Parse and store formula
 		}
-		else if(text.matches(".*\\w+'\\(.*\\).*"))
+		else if(text.matches(".*\\w+'+\\(.*\\).*"))
 		{
-			Pattern diff= Pattern.compile("(\\w+'\\([^()]+\\))");
+			Pattern diff= Pattern.compile("(\\w+('+)\\([^()]+\\))");
 			Matcher m = diff.matcher(text);
 			Vector<String> diffv=new Vector<String>();
 			while (m.find())
+			{
+				diffv.add(""+m.group(2).length());
 			    diffv.add(m.group(1));
+			}
+			System.out.println(diffv);
 			//check formula map, diff formula and replace f'(x) with it in formula
 		}
 		else

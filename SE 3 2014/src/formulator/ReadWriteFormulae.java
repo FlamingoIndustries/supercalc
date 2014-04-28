@@ -62,6 +62,8 @@ public class ReadWriteFormulae
 	
 	public static Boolean ReadFormulae()
 	{
+		HashMap<String, FormulaElement> out=new HashMap<String, FormulaElement>();
+		HashMap<String, Double> variables=new HashMap<String, Double>();
 		Stack<String> xmlstatements=new Stack<String>();
 		Stack<FormulaElement> formulae=new Stack<FormulaElement>();
 		Display display = new Display();
@@ -79,7 +81,7 @@ public class ReadWriteFormulae
 			String line;
 			reader.useDelimiter("\n");
 			Boolean newFormula=true;
-			String currentFormula;
+			String currentFormula="";
 			
 			while (reader.hasNext()) 
 			{
@@ -117,65 +119,55 @@ public class ReadWriteFormulae
 					xmlstatements.push(line);
 					
 				}
-				else if(line.matches("</[a-zA-Z]\\w*>")&&xmlstatements.peek().equals(line))
-				{
-					xmlstatements.pop();
-					if(!formulae.isEmpty())
-					{
-						FormulaElement elem=formulae.pop();
-						if(!formulae.isEmpty()&&formulae.peek() instanceof FunctionElement)
-						{
-							((FunctionElement)formulae.peek()).addNewArgument(elem);;
-						}
-						else if(formulae.isEmpty())
-						{
-							System.out.println(elem);
-						}
-					}
-				}
-				else if(line.matches("<VariableElement>name=\\w+ value=\\d+\\.\\d+ assigned=\\w+</VariableElement>"))
-				{
-					Pattern form= Pattern.compile("<VariableElement>name=(\\w+) value=(\\d+\\.\\d+) assigned=(\\w+)</VariableElement>");
-					Matcher m = form.matcher(line);
-					m.find();
-					String name=m.group(1);
-					double value=Double.parseDouble(m.group(2));
-					Boolean assigned=Boolean.parseBoolean(m.group(3));
-					VariableElement var=new VariableElement(name);
-					if(!formulae.isEmpty()&&formulae.peek() instanceof FunctionElement)
-					{
-						((FunctionElement)formulae.peek()).addNewArgument(var);;
-					}
-					else if(formulae.isEmpty())
-					{
-						System.out.println(var);
-					}
-				}
-				else if(line.matches("<ConstantElement>value=\\d+\\.\\d+</ConstantElement>"))
-				{
-					Pattern form= Pattern.compile("<ConstantElement>value=(\\d+\\.\\d+)</ConstantElement>");
-					Matcher m = form.matcher(line);
-					m.find();
-					double value=Double.parseDouble(m.group(1));
-					ConstantElement con=new ConstantElement(value);
-					if(!formulae.isEmpty()&&formulae.peek() instanceof FunctionElement)
-					{
-						((FunctionElement)formulae.peek()).addNewArgument(con);;
-					}
-					else if(formulae.isEmpty())
-					{
-						System.out.println(con);
-					}
-				}
 				else
 				{
-					return false;
+					FormulaElement elem=null;
+					if(line.matches("</[a-zA-Z]\\w*>")&&xmlstatements.peek().equals(line))
+					{
+						xmlstatements.pop();
+						if(!formulae.isEmpty())
+							elem=formulae.pop();
+					}
+					else if(line.matches("<VariableElement>name=\\w+ value=\\d+\\.\\d+ assigned=\\w+</VariableElement>"))
+					{
+						Pattern form= Pattern.compile("<VariableElement>name=(\\w+) value=(\\d+\\.\\d+) assigned=(\\w+)</VariableElement>");
+						Matcher m = form.matcher(line);
+						m.find();
+						String name=m.group(1);
+						double value=Double.parseDouble(m.group(2));
+						Boolean assigned=Boolean.parseBoolean(m.group(3));
+						elem=new VariableElement(name);
+						if(assigned)
+							variables.put(name, value);
+						
+					}
+					else if(line.matches("<ConstantElement>value=\\d+\\.\\d+</ConstantElement>"))
+					{
+						Pattern form= Pattern.compile("<ConstantElement>value=(\\d+\\.\\d+)</ConstantElement>");
+						Matcher m = form.matcher(line);
+						m.find();
+						double value=Double.parseDouble(m.group(1));
+						elem=new ConstantElement(value);
+					}
+					else
+					{
+						return false;
+					}
+					if(!formulae.isEmpty()&&formulae.peek() instanceof FunctionElement)
+						((FunctionElement)formulae.peek()).addNewArgument(elem);
+					else if(formulae.isEmpty()&&elem!=null)
+					{
+						out.put(currentFormula, elem);
+						currentFormula="";
+						newFormula=true;
+					}
 				}
 			}
 		} catch (IOException e)
 		{
 			return false;
 		}
+		System.out.println(out+"hi");
 		return true;
 	}
 }
