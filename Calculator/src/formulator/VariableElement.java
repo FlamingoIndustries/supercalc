@@ -4,6 +4,7 @@ public class VariableElement extends FormulaElement {
 	private String name;
 	private double value;
 	boolean valueAssigned;
+	private FormulaElement dVal;
 
 	public VariableElement(String input){
 		name = input;
@@ -32,9 +33,13 @@ public class VariableElement extends FormulaElement {
 		return value;
 	}
 
+	public void setdVal(FormulaElement value){
+		dVal = value;
+	}
+	
 	@Override
-	public FormulaElement getSimplifiedCopy() {
-		return this;
+	public FormulaElement dEval() {
+		return dVal;
 	}
 	
 }

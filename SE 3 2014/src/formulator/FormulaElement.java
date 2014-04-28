@@ -4,7 +4,6 @@
 
 package formulator;
 
-import java.util.Arrays;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -14,9 +13,7 @@ public abstract class FormulaElement
 	public abstract double evaluate() throws Exception;
 	public abstract void setVariableValue(String varName, double value);
 	public abstract Boolean isFullyGrounded();
-	public abstract FormulaElement getSimplifiedCopy();
-	public abstract void replaceVariable(String varName, FormulaElement replace);
-	public abstract String getXMLformat(String tabbing);
+	public abstract FormulaElement getSimplifiedCopy() throws CloneNotSupportedException;
 	protected int precedence=0;
 	
 	/**
@@ -233,20 +230,5 @@ public abstract class FormulaElement
 		else
 			throw new Exception("Badly formed formula!");
 		return tokens;
-	}
-	
-	public VariableElement findVariable(String varName)
-	{
-		return null;
-	}
-	
-	public FormulaElement copyFormula()
-	{
-		return this;
-	}
-	
-	public Boolean equals(FormulaElement comp)
-	{
-		return false;
 	}
 }
