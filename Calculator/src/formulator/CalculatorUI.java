@@ -1,5 +1,3 @@
-package formulator;
-
 import org.eclipse.swt.*;
 
 import org.eclipse.swt.widgets.*;
@@ -46,7 +44,7 @@ public class CalculatorUI {
     Composite14.setLayout(RowLayout15);
     Composite16 = new Composite(Composite14 , SWT.FLAT);
     Text17 = new Text(Composite16 , SWT.BORDER);
-    Text17.setBounds(1 , 2 , 100 , 20);
+    Text17.setBounds(1 , 2 , 170 , 20);
     Composite18 = new Composite(Composite14 , SWT.FLAT);
     GridLayout19 = new GridLayout();
     Composite18.setLayout(GridLayout19);
@@ -405,8 +403,8 @@ public class CalculatorUI {
  
   protected MenuItem MenuItem9;
  
-  ////>>>>  CalculatorGui: fields and methods
+  ////>>>>  CalculatorUI: fields and methods
   //// Add fields and methods below.
  
-  ////<<<<  CalculatorGui: fields and methods
+  ////<<<<  CalculatorUI: fields and methods
 }
