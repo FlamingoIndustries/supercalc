@@ -36,7 +36,6 @@ class MultipleFunctionElement extends FunctionElement
 	 * multiple function if the argument is a multiple function
 	 * @param x is an argument which is added to the multiple function
 	 */
-	@Override
 	public void addNewArgument(FormulaElement x)
 	{
 		if(x instanceof MultipleFunctionElement)
@@ -46,7 +45,6 @@ class MultipleFunctionElement extends FunctionElement
 			super.addNewArgument(x);
 	}
 	
-	@Override
 	public double evaluate() throws Exception
 	{
 		Vector<FormulaElement> temp=this.getArguments();
@@ -66,7 +64,6 @@ class MultipleFunctionElement extends FunctionElement
 	 * 3. Constants are multiplied out and placed before variables
 	 * 4. Variables are placed after constants.
 	 */
-	@Override
 	public String toString()
 	{
 		String output="";
@@ -111,91 +108,5 @@ class MultipleFunctionElement extends FunctionElement
 				output=((int)constant_total)+output;
 		
 		return output;
-	}
-	
-	@Override
-	public FormulaElement getSimplifiedCopy()
-	{
-		FormulaElement out=this;
-		Vector<FormulaElement> multelem=this.getArguments();
-		for(int i=0;i<multelem.size();i++)
-		{
-			FormulaElement m=multelem.remove(i);
-			multelem.add(i,m.getSimplifiedCopy());
-		}
-		for(int i=0;i<multelem.size();i++)
-		{
-			if(multelem.elementAt(i) instanceof PlusFunctionElement)
-			{
-				out=new PlusFunctionElement();
-				PlusFunctionElement f=(PlusFunctionElement)multelem.remove(i);
-				Vector<FormulaElement> v=f.getArguments();
-				for(int j=0;j<v.size();j++)
-				{
-					FormulaElement g=v.elementAt(j);
-					MultipleFunctionElement m=new MultipleFunctionElement(); 
-					m.addNewArgument(g);
-					for(int p=0;p<multelem.size();p++)
-						m.addNewArgument(multelem.elementAt(p));
-					try
-					{
-						ConstantElement newcon=new ConstantElement(m.evaluate());
-						((PlusFunctionElement) out).addNewArgument(newcon);
-					}
-					catch(Exception e)
-					{
-						((PlusFunctionElement) out).addNewArgument(m);
-					}
-				}
-				return out.getSimplifiedCopy();
-			}
-		}
-		double constprod=1;
-		HashMap<String,Vector<FormulaElement>> vars=new HashMap<String,Vector<FormulaElement>>();
-		for(int j=0;j<multelem.size();j++)
-		{
-			if(multelem.elementAt(j) instanceof ConstantElement)
-			{
-				constprod*=((ConstantElement)multelem.remove(j)).getValue();
-				j--;
-			}
-			else if(multelem.elementAt(j) instanceof FormulaElement)
-			{
-				FormulaElement var=multelem.remove(j);
-				FormulaElement count=new ConstantElement(1);
-				if(var instanceof PowerFunctionElement)
-				{
-					Vector<FormulaElement> powargs=((PowerFunctionElement)var).getArguments();
-					var=powargs.firstElement();
-					count=powargs.lastElement();
-				}
-				vars=this.addToHashMap(var, count, vars);
-				j--;
-			}
-		}
-		for(Entry<String, Vector<FormulaElement>> ent:vars.entrySet())
-		{
-			Vector<FormulaElement> v=ent.getValue();
-			if(v.elementAt(1) instanceof ConstantElement&&((ConstantElement)v.elementAt(1)).getValue()==1)
-				multelem.add(v.firstElement());
-			else
-			{
-				FormulaElement var=((FormulaElement) v.firstElement());
-				PowerFunctionElement pow=new PowerFunctionElement();
-				pow.addNewArgument(var);
-				pow.addNewArgument(v.elementAt(1));
-				multelem.add(pow);
-			}
-		}
-		ConstantElement product=new ConstantElement(constprod);
-		if(!multelem.isEmpty()&&constprod!=1)
-			multelem.add(product);
-		else if(multelem.isEmpty())
-			return product;
-		
-		out=new MultipleFunctionElement();
-		for(FormulaElement e:multelem)
-			((MultipleFunctionElement)out).addNewArgument(e);
-		return out;
 	}
 }

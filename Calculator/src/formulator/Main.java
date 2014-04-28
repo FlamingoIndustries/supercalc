@@ -2,13 +2,13 @@ package formulator;
 import java.util.HashMap;
 import java.util.Vector;
 
+//shouldn't catch the minus
+
 public class Main {
 	public static HashMap<String, FormulaElement> formulas = new HashMap<String, FormulaElement>();
 	
 	public static void main(String[] args){
 		//Sample input Strings to try:
-		//"x^y^z+4"
-		//"2X + Y/(X+5.5)^(2+n)"
 		//"Y^3-6X(Z+5(Y+2^2))"
 		//"3 + 4.6 + cos(1)"
 		
@@ -29,24 +29,34 @@ public class Main {
 		evalEx.setVariableValue("y", y_val);
 		System.out.println("Evaluating: "+evalEx.toString());
 		System.out.println("Fully grounded: "+evalEx.isFullyGrounded());
-		if(evalEx.isFullyGrounded())
-			System.out.println("Evaluation: "+evalEx.evaluate());
+		if(!evalEx.isFullyGrounded())
+			System.out.println("Not all variables in the formula have been assigned a value");
 		else
-			System.out.println("Formula can't be evaluated because it isn't fully grounded.");
+			System.out.println("Evaluation: "+evalEx.evaluate());
 		
-		//testing SIMPLIFICATION
-		//FormulaElement simTest = FormulaElement.parseFormula("(x+3)(x+4)");
-		//System.out.println(simTest.getSimplifiedCopy());
+
+		Vector<String> variables = evalEx.identifyVars();
+		for(String var: variables){
+			evalEx.setVariableValue(var, 2);
+		}
+		System.out.println("Eval: "+evalEx.evaluate());
+		
+		
+		//INPUT PARSING
+		String input = "h(x, y) = y(2x)";
+		formulas.put(input.substring(0,1), FormulaElement.parseInitialFormula(input));
+		//System.out.println(formulas.get("h"));
 		
 		//testing ADVANCED EVALUATION
 		FormulaElement F = FormulaElement.parseFormula("y(2x)");
 		formulas.put("f", F);
 		FormulaElement G = FormulaElement.parseFormula("x+3");
 		formulas.put("g", G);
-		String input = "f(x=g(2), y=2)";
-		EvalFormula eval = new EvalFormula(input.substring(0, 1));
-		System.out.println("Evaluation: "+eval.evaluateInput(input));
+		String input2 = "f(x=g(3) y=2)";
+		System.out.println("Evaluation: "+EvalFormula.evaluateFor(input2));
 		
+		//PARTIAL EVALUATION for derivatives
+		G.setDValue("x", new MultipleFunctionElement(new VariableElement("y"), new ConstantElement(4)));
+		System.out.println(G.dEval());
 	}
-
 }

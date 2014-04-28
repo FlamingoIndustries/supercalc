@@ -51,9 +51,10 @@ public class PowerFunctionElement extends FunctionElement {
 	}
 
 	@Override
-	public FormulaElement getSimplifiedCopy() {
-		// TODO Auto-generated method stub
-		return null;
+	public FormulaElement dEval() {
+		FormulaElement arg1 = getArguments().elementAt(0);
+		FormulaElement arg2 = getArguments().elementAt(1);
+		return new PowerFunctionElement(arg1.dEval(), arg2.dEval());
 	}
 	
 }

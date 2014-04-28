@@ -22,7 +22,7 @@ public class ConstantElement extends FormulaElement {
 	}
 
 	@Override
-	public FormulaElement getSimplifiedCopy() {
+	public FormulaElement dEval() {
 		return this;
 	}
 }
