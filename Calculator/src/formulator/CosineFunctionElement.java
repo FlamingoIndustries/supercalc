@@ -20,12 +20,17 @@ public class CosineFunctionElement extends FunctionElement{
 	}
 	
 	public String toString(){
-		String retString = "cos(" + getArguments().elementAt(0).toString() +")";
+		String retString = "cos(" + getArguments().get(0).toString() +")";
 		return retString;
 	}
 	
 	public double evaluate(){
-		return Math.cos(getArguments().elementAt(0).evaluate());
+		return Math.cos(getArguments().get(0).evaluate());
+	}
+
+	@Override
+	public FormulaElement dEval() {
+		return new CosineFunctionElement(getArguments().get(0).dEval());
 	}
 	
 }

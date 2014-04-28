@@ -51,4 +51,16 @@ public class MultipleFunctionElement extends FunctionElement {
 		}
 		return retNum;
 	}
+
+	@Override
+	public FormulaElement dEval() {
+		Vector<FormulaElement> arguments = getArguments();
+		MultipleFunctionElement newMult = new MultipleFunctionElement();
+		FormulaElement arg;
+		for(int i=0; i<arguments.size(); i++){
+			arg=arguments.elementAt(i);
+			newMult.addArgument(arg.dEval());
+		}
+		return newMult;
+	}
 }

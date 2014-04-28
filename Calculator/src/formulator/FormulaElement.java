@@ -7,6 +7,7 @@ import java.util.Vector;
 public abstract class FormulaElement
 {	
 	public abstract double evaluate();
+	public abstract FormulaElement dEval();
 	
 	//assigns the specified value to all instances of the specified variable in the formula by recursively searching
 	public void setVariableValue(String varName, double value){
@@ -23,6 +24,19 @@ public abstract class FormulaElement
 		}
 	}
 	
+	public void setDValue(String varName, FormulaElement value){
+		if(this instanceof VariableElement){
+			VariableElement current = (VariableElement) this;
+			if(current.getName().equals(varName)){
+				current.setdVal(value);
+			}
+		}
+		else if(this instanceof FunctionElement){
+			for(FormulaElement elem: ((FunctionElement)this).getArguments()){
+				elem.setDValue(varName, value);
+			}
+		}
+	}
 
 	
 	//identify all the variables in a formula and put them in the variables hash map
@@ -56,6 +70,14 @@ public abstract class FormulaElement
 		return true;
 	}
 
+	
+	public static FormulaElement parseInitialFormula(String formula){
+		while(formula.charAt(0)!='='){
+			formula = formula.substring(1);
+		}
+		formula = formula.substring(1);
+		return parseFormula(formula);
+	}
 	
 	@SuppressWarnings("unchecked")
 	public static FormulaElement parseFormula(String formula)

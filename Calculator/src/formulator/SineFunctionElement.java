@@ -20,12 +20,18 @@ public class SineFunctionElement extends FunctionElement {
 	}
 	
 	public String toString(){
-		String retString = "sin(" + getArguments().elementAt(0).toString() +")";
+		String retString = "sin(" + getArguments().get(0).toString() +")";
 		return retString;
 	}
 	
 	public double evaluate(){
-		return Math.sin(getArguments().elementAt(0).evaluate());
+		return Math.sin(getArguments().get(0).evaluate());
 	}
+
+	@Override
+	public FormulaElement dEval() {
+		return new SineFunctionElement(getArguments().get(0).dEval());
+	}
+	
 
 }

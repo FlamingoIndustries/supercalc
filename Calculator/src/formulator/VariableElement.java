@@ -4,6 +4,7 @@ public class VariableElement extends FormulaElement {
 	private String name;
 	private double value;
 	boolean valueAssigned;
+	private FormulaElement dVal;
 
 	public VariableElement(String input){
 		name = input;
@@ -30,6 +31,15 @@ public class VariableElement extends FormulaElement {
 	@Override
 	public double evaluate() {
 		return value;
+	}
+
+	public void setdVal(FormulaElement value){
+		dVal = value;
+	}
+	
+	@Override
+	public FormulaElement dEval() {
+		return dVal;
 	}
 	
 }

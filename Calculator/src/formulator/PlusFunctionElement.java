@@ -66,4 +66,15 @@ public class PlusFunctionElement extends FunctionElement {
 		}
 		return retNum;
 	}
+	
+	public FormulaElement dEval() {
+		Vector<FormulaElement> arguments = getArguments();
+		PlusFunctionElement newPlus = new PlusFunctionElement();
+		FormulaElement arg;
+		for(int i=0; i<arguments.size(); i++){
+			arg=arguments.elementAt(i);
+			newPlus.addArgument(arg.dEval());
+		}
+		return newPlus;
+	}
 }

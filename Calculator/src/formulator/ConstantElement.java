@@ -20,4 +20,9 @@ public class ConstantElement extends FormulaElement {
 	public double evaluate() {
 		return value;
 	}
+
+	@Override
+	public FormulaElement dEval() {
+		return this;
+	}
 }
