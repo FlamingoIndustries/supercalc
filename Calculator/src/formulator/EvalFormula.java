@@ -10,12 +10,10 @@ public class EvalFormula {
 	public static double evaluateFor(String input){
 		//find formula element and identify its variables
 		FormulaElement formula = Main.formulas.get(input.substring(0, 1));
-		
 		Vector<String> varKeys = formula.identifyVars();
 		HashMap<String, Double> vars = new HashMap<String, Double>();
 		for(String key: varKeys)
 			vars.put(key, null);
-		
 		//chop off first part of the string input so the parsing bit starts after the open bracket
 		String toParse = input.substring(2);
 		//create a string tokenizer to identify variables, equal signs, and variable values
@@ -63,7 +61,6 @@ public class EvalFormula {
 						recInput+=tokens.remove(i+1);
 						recInput+=tokens.remove(i+1);
 						double varValue = EvalFormula.evaluateFor(recInput);
-
 						vars.put(varKey, varValue);
 					}
 					else
@@ -79,10 +76,10 @@ public class EvalFormula {
 		}
 		
 		//testing that variables were assigned the correct values
-		for(String key: vars.keySet()){
-			System.out.print(key+": ");
-			System.out.println(vars.get(key));
-		}
+//		for(String key: vars.keySet()){
+//			System.out.print(key+": ");
+//			System.out.println(vars.get(key));
+//		}
 		
 		//assign respective values to all variables in the formula using the created variables vector
 		for(String key: vars.keySet()){

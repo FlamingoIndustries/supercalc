@@ -41,10 +41,11 @@ public class Main {
 		}
 		System.out.println("Eval: "+evalEx.evaluate());
 		
-		//Formula Input
+		
+		//INPUT PARSING
 		String input = "h(x, y) = y(2x)";
 		formulas.put(input.substring(0,1), FormulaElement.parseInitialFormula(input));
-		System.out.println(formulas.get("h"));
+		//System.out.println(formulas.get("h"));
 		
 		//testing ADVANCED EVALUATION
 		FormulaElement F = FormulaElement.parseFormula("y(2x)");
@@ -52,13 +53,10 @@ public class Main {
 		FormulaElement G = FormulaElement.parseFormula("x+3");
 		formulas.put("g", G);
 		String input2 = "f(x=g(3) y=2)";
-		System.out.println("Evaluation: "+EvalFormula.evaluateFor(input));
+		System.out.println("Evaluation: "+EvalFormula.evaluateFor(input2));
 		
 		//PARTIAL EVALUATION for derivatives
-		G.setDValue("x", new PlusFunctionElement(new VariableElement("y"), new ConstantElement(4)));
-		//System.out.println(G.dEval());
-		
-		
-		
+		G.setDValue("x", new MultipleFunctionElement(new VariableElement("y"), new ConstantElement(4)));
+		System.out.println(G.dEval());
 	}
 }
