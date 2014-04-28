@@ -14,6 +14,16 @@ public class MultipleFunctionElement extends FunctionElement {
 	public MultipleFunctionElement(){	
 	}
 	
+	public void addArgument(FormulaElement arg){
+		if(arg instanceof MultipleFunctionElement){
+			for(FormulaElement sub_arg: ((MultipleFunctionElement) arg).getArguments()){
+				arguments.add(sub_arg);
+			}
+		}
+		else
+			arguments.add(arg);
+	}
+	
 	public String toString(){
 		Vector<FormulaElement> arguments = getArguments();
 		double retNum=0;
