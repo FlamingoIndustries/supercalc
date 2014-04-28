@@ -28,6 +28,7 @@ public class Main
 		
 		result=FormulaElement.parseFormula("x^(3x+4)+5x+1");
 		System.out.println(result);
+<<<<<<< HEAD
 		System.out.println(result.isFullyGrounded());
 		result.setVariableValue("x", 3);
 		System.out.println(result.isFullyGrounded());
@@ -36,6 +37,13 @@ public class Main
 		System.out.println("x=2, result: "+result.evaluate()+"\n");
 		
 		result=FormulaElement.parseFormula("cos(x)+(z-y)/y");
+=======
+	//	System.out.println(result2);
+		ReadWriteFormulae.ReadFormulae();
+		//ReadWriteFormulae.WriteFormulae();
+		System.out.println(result.getSimplifiedCopy()+"\n\n\n");
+		result=FormulaElement.parseFormula("(x+2)+(x-3)(x+4)/(x+4)");
+>>>>>>> FETCH_HEAD
 		System.out.println(result);
 		System.out.println(result.isFullyGrounded());
 		result.setVariableValue("x", Math.toRadians(60));

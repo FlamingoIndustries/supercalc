@@ -1,3 +1,5 @@
+package formulator;
+
 import org.eclipse.swt.*;
 
 import org.eclipse.swt.widgets.*;

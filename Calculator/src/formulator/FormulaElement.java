@@ -1,10 +1,11 @@
 package formulator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
 public abstract class FormulaElement
 {	
-
 	public abstract double evaluate();
 	
 	//assigns the specified value to all instances of the specified variable in the formula by recursively searching
@@ -20,16 +21,31 @@ public abstract class FormulaElement
 				elem.setVariableValue(varName, value);
 			}
 		}
-		
+	}
+	
+
+	
+	//identify all the variables in a formula and put them in the variables hash map
+	public Vector<String> identifyVars(){
+		Vector<String> vars = new Vector<String>();
+		if(this instanceof VariableElement){
+			VariableElement current = (VariableElement) this;
+			vars.add(current.getName());
+		}
+		else if(this instanceof FunctionElement){
+			for(FormulaElement elem: ((FunctionElement)this).getArguments()){
+				vars.addAll(elem.identifyVars());
+			}
+		}
+		return vars;
 	}
 	
 	//method that checks if all variables in a formula have been assigned a value
 	public boolean isFullyGrounded(){
 		if(this instanceof VariableElement){
 			VariableElement current = (VariableElement) this;
-			if(!current.valueAssigned){
+			if(!current.valueAssigned)
 				return false;
-			}
 		}
 		else if(this instanceof FunctionElement){
 			for(FormulaElement elem: ((FunctionElement)this).getArguments()){
