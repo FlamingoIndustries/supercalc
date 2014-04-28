@@ -2,7 +2,7 @@ package formulator;
 
 import javax.swing.SwingUtilities;
 
-public class graphControl {
+public class GraphControl {
 	/*Current bug list:
 	 !Extra Origin point being drawn.
 	 Conversion from double to integer is leaving point offsets a little weird.
@@ -24,14 +24,16 @@ public class graphControl {
 		   
 		   @Override
 		   public void run() {
+			   	//String str = "cos(x)";
 			   	String str = "x(4/3)";
 				//String str = "(x^(3/2)) ";
 				//String str = "(x+2)(x-(y^7)+cos(2^x))";
 				FormulaElement result = (FormulaElement.parseFormula(str));
 				//Pass in the root node of the formula to the CartesianFrame constructor
-				int min = -10;
-				int max = 10;
-				CartesianFrame frame = new CartesianFrame(result, min, max, true, true, true);
+				double min = 0.4;
+				double max = 11.4;
+				double incre = 0.2;
+				CartesianFrame frame = new CartesianFrame(result, min, max, incre, true, true, true);
 				frame.showUI();
 		   }
 		  });
